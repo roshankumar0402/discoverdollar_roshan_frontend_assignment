@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Menubar,
@@ -15,6 +16,14 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import {
+  CommandInput,
+  CommandEmpty,
+  CommandItem,
+  CommandGroup,
+  CommandList,
+  Command,
+} from "@/components/ui/command";
 
 const menus = [
   {
@@ -68,7 +77,76 @@ const menus = [
   },
 ];
 
+const items = [
+  "Electronics",
+  "Laptops",
+  "Work",
+  "Gaming",
+  "Custom",
+  "TVs",
+  "Slim",
+  "Curved",
+  "Touch Screen",
+  "Cameras",
+  "DSLR",
+  "Pocket",
+  "Retro",
+  "Home",
+  "Furniture",
+  "Sofa",
+  "Table",
+  "Chair",
+  "Decor",
+  "Paintings",
+  "Lamps",
+  "Mirrors",
+  "Kitchen",
+  "Cookware",
+  "Appliances",
+  "Utensils",
+  "Appliances",
+  "Refrigerators",
+  "Single door",
+  "Multiple door",
+  "Custom",
+  "Washing Machines",
+  "Front-load",
+  "Top-load",
+  "Custom",
+  "ACs",
+  "Cooler A",
+  "Cooler B",
+  "Cooler C",
+  "Grocery",
+  "Fruits & Vegetables",
+  "Apple",
+  "Banana",
+  "Carrot",
+  "Dairy & Bakery",
+  "Milk",
+  "Bread",
+  "Cheese",
+  "Staples",
+  "Rice",
+  "Pasta",
+  "Beans",
+  "Beauty and Toys",
+  "Makeup",
+  "Lipstick",
+  "Foundation",
+  "Eyeshadow",
+  "Skincare",
+  "Moisturizer",
+  "Cleanser",
+  "Sunscreen",
+  "Toys",
+  "Action Figures",
+  "Dolls",
+  "Board Games",
+];
+
 export default function Component() {
+  const [searchTerm, setSerchTerm] = useState("");
   return (
     <div className="bg-white">
       <header className="bg-[#2874f0] p-4 text-white">
@@ -85,14 +163,27 @@ export default function Component() {
               }}
               width="100"
             />
-            <div className="flex items-center border-2 border-white rounded px-2 py-1">
-              <SearchIcon className="text-white" />
-              <input
-                className="bg-transparent text-white placeholder-white focus:outline-none ml-2"
-                placeholder="Search for products, brands and more"
-                type="text"
+            <Command>
+              <CommandInput
+                autoFocus
+                className="h-9"
+                placeholder="Search..."
+                value={searchTerm}
+                onValueChange={(searchString) => {
+                  setSerchTerm(searchString);
+                }}
               />
-            </div>
+              <CommandList className="z-10">
+                <CommandEmpty>No match found.</CommandEmpty>
+                {searchTerm !== "" ? (
+                  <CommandGroup className="">
+                    {items.map((item, index) => (
+                      <CommandItem key={index}>{item}</CommandItem>
+                    ))}
+                  </CommandGroup>
+                ) : null}
+              </CommandList>
+            </Command>
           </div>
           <div className="flex items-center space-x-4">
             <Button className="text-white bg-[#2874f0] hover:bg-[#0a5dc2]">
