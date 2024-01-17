@@ -1,113 +1,273 @@
-import Image from 'next/image'
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  Menubar,
+  MenubarCheckboxItem,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarRadioGroup,
+  MenubarRadioItem,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarSub,
+  MenubarSubContent,
+  MenubarSubTrigger,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
 
-export default function Home() {
+const menus = [
+  {
+    menu: "Electronics",
+    submenus: [
+      { menu: "Laptops", submenus: ["Work", "Gaming", "Custom"] },
+      { menu: "TVs", submenus: ["Slim", "Curved", "Touch Screen"] },
+      { menu: "Cameras", submenus: ["DSLR", "Pocket", "Retro"] },
+    ],
+  },
+  {
+    menu: "Home",
+    submenus: [
+      { menu: "Furniture", submenus: ["Sofa", "Table", "Chair"] },
+      { menu: "Decor", submenus: ["Paintings", "Lamps", "Mirrors"] },
+      { menu: "Kitchen", submenus: ["Cookware", "Appliances", "Utensils"] },
+    ],
+  },
+  {
+    menu: "Appliances",
+    submenus: [
+      {
+        menu: "Refrigerators",
+        submenus: ["Single door", "Multiple door", "Custom"],
+      },
+      {
+        menu: "Washing Machines",
+        submenus: ["Front-load", "Top-load", "Custom"],
+      },
+      {
+        menu: "ACs",
+        submenus: ["Cooler A", "Cooler B", "Cooler C"],
+      },
+    ],
+  },
+  {
+    menu: "Grocery",
+    submenus: [
+      { menu: "Fruits & Vegetables", submenus: ["Apple", "Banana", "Carrot"] },
+      { menu: "Dairy & Bakery", submenus: ["Milk", "Bread", "Cheese"] },
+      { menu: "Staples", submenus: ["Rice", "Pasta", "Beans"] },
+    ],
+  },
+  {
+    menu: "Beauty and Toys",
+    submenus: [
+      { menu: "Makeup", submenus: ["Lipstick", "Foundation", "Eyeshadow"] },
+      { menu: "Skincare", submenus: ["Moisturizer", "Cleanser", "Sunscreen"] },
+      { menu: "Toys", submenus: ["Action Figures", "Dolls", "Board Games"] },
+    ],
+  },
+];
+
+export default function Component() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+    <div className="bg-white">
+      <header className="bg-[#2874f0] p-4 text-white">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <img
+              alt="Logo"
+              className="h-10"
+              height="40"
+              src="https://cdn.pixabay.com/photo/2017/03/29/04/09/shopping-icon-2184065_1280.png"
+              style={{
+                aspectRatio: "100/40",
+                objectFit: "contain",
+              }}
+              width="100"
             />
-          </a>
+            <div className="flex items-center border-2 border-white rounded px-2 py-1">
+              <SearchIcon className="text-white" />
+              <input
+                className="bg-transparent text-white placeholder-white focus:outline-none ml-2"
+                placeholder="Search for products, brands and more"
+                type="text"
+              />
+            </div>
+          </div>
+          <div className="flex items-center space-x-4">
+            <Button className="text-white bg-[#2874f0] hover:bg-[#0a5dc2]">
+              Login
+            </Button>
+            <ShoppingCartIcon className="text-white" />
+          </div>
         </div>
-      </div>
+        <nav className="flex justify-between mt-4">
+          <Menubar className="w-full flex justify-around bg-transparent text-white border-none">
+            {menus.map((category, key1) => (
+              <MenubarMenu key={key1}>
+                <MenubarTrigger className="bg-transparent">
+                  {category.menu}
+                </MenubarTrigger>
+                <MenubarContent>
+                  {category.submenus.map((submenu, key2) => (
+                    <MenubarSub key={key2}>
+                      <MenubarSubTrigger>{submenu.menu}</MenubarSubTrigger>
+                      <MenubarSubContent>
+                        {submenu.submenus && submenu.submenus.length > 0 && (
+                          <>
+                            {submenu.submenus.map((nestedSubmenu, key3) => (
+                              <>
+                                <MenubarItem>{nestedSubmenu}</MenubarItem>
+                                <MenubarSeparator />
+                              </>
+                            ))}
+                          </>
+                        )}
+                      </MenubarSubContent>
+                    </MenubarSub>
+                  ))}
+                </MenubarContent>
+              </MenubarMenu>
+            ))}
+          </Menubar>
+        </nav>
+      </header>
+      <main>
+        <section className="my-4">
+          <img
+            alt="Big Year End Sale"
+            className="w-full"
+            height="200"
+            src="https://images.unsplash.com/photo-1511556820780-d912e42b4980?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            style={{
+              aspectRatio: "800/200",
+              objectFit: "cover",
+            }}
+            width="800"
+          />
+        </section>
+        <section className="my-4 px-4">
+          <h2 className="text-xl font-semibold mb-2">Best Selling Products</h2>
+          <div className="grid grid-cols-5 gap-4">
+            <img
+              alt="Laptop"
+              className="w-full"
+              height="150"
+              src="https://images.unsplash.com/photo-1588702547923-7093a6c3ba33?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              style={{
+                aspectRatio: "150/150",
+                objectFit: "cover",
+              }}
+              width="150"
+            />
+            <img
+              alt="tshirt"
+              className="w-full"
+              height="150"
+              src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              style={{
+                aspectRatio: "150/150",
+                objectFit: "cover",
+              }}
+              width="150"
+            />
+            <img
+              alt="Camera"
+              className="w-full"
+              height="150"
+              src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1638&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              style={{
+                aspectRatio: "150/150",
+                objectFit: "cover",
+              }}
+              width="150"
+            />
+            <img
+              alt="Headphones"
+              className="w-full"
+              height="150"
+              src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              style={{
+                aspectRatio: "150/150",
+                objectFit: "cover",
+              }}
+              width="150"
+            />
+            <img
+              alt="Toys"
+              className="w-full"
+              height="150"
+              src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              style={{
+                aspectRatio: "150/150",
+                objectFit: "cover",
+              }}
+              width="150"
+            />
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+function ArrowDownIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 5v14" />
+      <path d="m19 12-7 7-7-7" />
+    </svg>
+  );
+}
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+function SearchIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.3-4.3" />
+    </svg>
+  );
+}
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+function ShoppingCartIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="8" cy="21" r="1" />
+      <circle cx="19" cy="21" r="1" />
+      <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+    </svg>
+  );
 }
